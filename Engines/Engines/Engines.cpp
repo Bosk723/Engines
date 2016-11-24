@@ -1,9 +1,13 @@
 // Engines.cpp : Defines the entry point for the console application.
 //
 
+#include <iostream>
+
 #include "stdafx.h"
 #include <SDL.h>
 #include <stdio.h>
+#include "GameManager.h"
+
 
 //Screen dimension constants
 const int SCREEN_WIDTH = 640;
@@ -11,6 +15,10 @@ const int SCREEN_HEIGHT = 480;
 
 int main(int argc, char* args[])
 {
+	
+	GameManager::initialize();
+	
+	//std::cout << "asdf";
 	//The window we'll be rendering to
 	SDL_Window* window = NULL;;
 
@@ -41,8 +49,8 @@ int main(int argc, char* args[])
 			//Update the surface
 			SDL_UpdateWindowSurface(window);
 
-			//Wait ten seconds
-			SDL_Delay(10000);
+			//Wait 1 second
+			SDL_Delay(1000);
 		}
 	}
 	//Destroy window
