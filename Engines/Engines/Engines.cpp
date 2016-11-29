@@ -49,8 +49,8 @@ int main(int argc, char* args[])
 			//Update the surface
 			SDL_UpdateWindowSurface(window);
 
-			//Wait 1 second
-			SDL_Delay(1000);
+			//Wait 2 second
+			SDL_Delay(2000);
 		}
 	}
 	//Destroy window
