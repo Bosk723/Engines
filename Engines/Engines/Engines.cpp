@@ -17,6 +17,8 @@ int main(int argc, char* args[])
 {
 	
 	GameManager::initialize();
+
+	
 	
 	//std::cout << "asdf";
 	//The window we'll be rendering to
@@ -49,8 +51,8 @@ int main(int argc, char* args[])
 			//Update the surface
 			SDL_UpdateWindowSurface(window);
 
-			//Wait 2 second
-			SDL_Delay(2000);
+			//Wait 1 second
+			SDL_Delay(1000);
 		}
 	}
 	//Destroy window
