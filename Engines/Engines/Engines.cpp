@@ -7,19 +7,79 @@
 #include <SDL.h>
 #include <stdio.h>
 #include "GameManager.h"
+#include "GameObject.h"
+#include "Transform.h"
 
 
-//Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
+
+
 
 int main(int argc, char* args[])
 {
 	
 	GameManager::initialize();
+	GameObject go;
+	go.addComponent("transform");
+	
+	Transform* asf = go.getTransform();
+	go.deleteComponent("transform");
+	//INPUT
+	SDL_Event e;
+	bool quit = false;
 
+		
+			while (!quit)
+			{
+				GameManager::GetInstance().update();
+				//Handle events on queue
+				while (SDL_PollEvent(&e) != 0)
+				{
+					//User requests quit
+					if (e.type == SDL_QUIT)
+					{
+						quit = true;
+					}
+					//User presses a key
+					else if (e.type == SDL_KEYDOWN)
+					{
+						//Select surfaces based on key press
+						switch (e.key.keysym.sym)
+						{
+						case SDLK_UP:
+							//stretchRect.y -= 5;
+							break;
+
+						case SDLK_DOWN:
+							//stretchRect.y += 5;
+							quit = true;
+							break;
+
+						case SDLK_LEFT:
+							//stretchRect.x -= 5;
+							break;
+
+						case SDLK_RIGHT:
+							//stretchRect.x += 5;
+							break;
+
+						default:
+
+							break;
+						}
+					}
+				}
+			}
+			
+			GameManager::GetInstance().~GameManager();
 	
+
+	//Free resources and close SDL
 	
+
+
+
+
+	/*
 	//std::cout << "asdf";
 	//The window we'll be rendering to
 	SDL_Window* window = NULL;;
@@ -52,15 +112,20 @@ int main(int argc, char* args[])
 			SDL_UpdateWindowSurface(window);
 
 			//Wait 1 second
-			SDL_Delay(1000);
+			SDL_Delay(10000);
 		}
 	}
 	//Destroy window
 	SDL_DestroyWindow(window);
 
 	//Quit SDL subsystems
-	SDL_Quit();
+	SDL_Quit();*/
 
 	return 0;
 }
+
+
+
+
+
 

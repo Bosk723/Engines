@@ -17,7 +17,8 @@ SoundManager::SoundManager()
 {
 	/*loadMusic();
 	Mix_PlayMusic(gMusic, -1);*/
-	loadSound();
+	playSound("Sounds/scratch.wav");
+	playMusic("Sounds/beat.wav");
 	Mix_PlayChannel(-1, gScratch, 0);
 }
 
@@ -43,7 +44,7 @@ void SoundManager::initialize()
 	else if(Mix_OpenAudio(44100, MIX_DEFAULT_FORMAT, 2, 2048) < 0)
 	{
 		{
-			OutputDebugString(L"*****************AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA***************************");
+			OutputDebugString(L"*****************AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA***************************");
 			printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		}
 	}
@@ -57,14 +58,14 @@ void SoundManager::update()
 
 }
 
-bool SoundManager::loadSound()
+bool SoundManager::loadSound(std::string sound)
 {
 	//Loading success flag
 	bool success = true;
-
+	
 
 	//Load sound effects
-	gScratch = Mix_LoadWAV("Sounds/scratch.wav");
+	gScratch = Mix_LoadWAV(sound.c_str());
 
 	if (gScratch == NULL)
 	{
@@ -76,7 +77,7 @@ bool SoundManager::loadSound()
 
 	return success;
 }
-bool SoundManager::loadMusic()
+bool SoundManager::loadMusic(std::string music)
 {
 	//Loading success flag
 	bool success = true;
@@ -84,7 +85,7 @@ bool SoundManager::loadMusic()
 
 
 	//Load music
-	gMusic = Mix_LoadMUS("Sounds/beat.wav");
+	gMusic = Mix_LoadMUS(music.c_str());
 	
 	if (gMusic == NULL)
 	{
@@ -112,9 +113,10 @@ void SoundManager::freeMusic()
 
 void SoundManager::playSound(std::string soundName)
 {
-	//loadSound();
+	loadSound(soundName);
 }
-void playMusic(std::string soundMusic)
+void SoundManager::playMusic(std::string soundMusic)
 {
-
+	loadMusic(soundMusic);
+	Mix_PlayMusic(gMusic, -1);
 }

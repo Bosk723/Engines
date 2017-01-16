@@ -6,8 +6,8 @@ class SoundManager :public Singleton<SoundManager>
 	friend class Singleton<SoundManager>;
 private:
 	SoundManager();
-	bool loadSound();
-	bool loadMusic();
+	bool loadSound(std::string sound);
+	bool loadMusic(std::string music);
 	void freeSound();
 	void freeMusic();
 public:

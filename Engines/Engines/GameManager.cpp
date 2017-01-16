@@ -15,6 +15,13 @@ GameManager::GameManager()
 
 GameManager::~GameManager()
 {
+	RenderManager::GetInstance().~RenderManager();
+	InputManager::GetInstance().~InputManager();
+	TimeManager::GetInstance().~TimeManager();
+	SoundManager::GetInstance().~SoundManager();
+	SceneManager::GetInstance().~SceneManager();
+	AssetsManager::GetInstance().~AssetsManager();
+	
 }
 
 void GameManager::initialize()
@@ -31,6 +38,7 @@ void GameManager::initialize()
 
 void GameManager::update()
 {
+
 	RenderManager::GetInstance().update();
 	InputManager::GetInstance().update();
 	TimeManager::GetInstance().update();
