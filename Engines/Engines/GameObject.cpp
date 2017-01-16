@@ -45,6 +45,7 @@ Component *GameObject::addComponent(std::string typeOfComponent)
 		if (components[1] == NULL)
 		{
 			components[1] =new Image();
+			
 		}
 	}
 	

@@ -1,36 +1,16 @@
 #include "stdafx.h"
 #include "RenderManager.h"
 #include <SDL.h>
+#include <string>
+#include "GameObject.h"
+#include "SceneManager.h"
 
 //Screen dimension constants
-const int SCREEN_WIDTH = 640;
-const int SCREEN_HEIGHT = 480;
-
-
-//PRUEBA DE IMAGEN
-bool init();
-
-//Loads media
-bool loadMedia();
-
-//Frees media and shuts down SDL
-void close();
-
-//The window we'll be rendering to
-SDL_Window* gWindow = NULL;
-
-//The surface contained by the window
-SDL_Surface* gScreenSurface = NULL;
-
-//The image we will load and show on the screen
-SDL_Surface* gHelloWorld = NULL;
-SDL_Surface* gRun = NULL;
-
-SDL_Rect stretchRect;
-
+static const int SCREEN_WIDTH = 800;
+static const int SCREEN_HEIGHT = 800;
 RenderManager::RenderManager()
 {
-
+	init();
 }
 
 
@@ -44,52 +24,40 @@ void RenderManager::initialize()
 
 	CreateSingleton();
 	
-	init();
-	loadMedia();
-	
 }
 
 void RenderManager::update()
 {
 	bool quit = false;
 
-	//Start up SDL and create window
-	/*if (!init())
-	{
-		printf("Failed to initialize!\n");
-	}
-	else
-	{*/
-		//Load media
-		/*if (!loadMedia())
-		{
-			printf("Failed to load media!\n");
-		}
-		else
-		{*/
-			
-
+			if (SceneManager::GetInstance().background != NULL)
+			{
 				//Apply the image
-				SDL_BlitSurface(gHelloWorld, NULL, gScreenSurface, NULL);
+				SDL_BlitSurface(SceneManager::GetInstance().background, NULL, gScreenSurface, NULL);
+			}
 
 				//Apply the image stretched
 
-
-				SDL_BlitScaled(gRun, NULL, gScreenSurface, &stretchRect);
+			for (int i = 0; i < SceneManager::GetInstance().sceneObjects.size(); i++)
+			{
+				if (SceneManager::GetInstance().sceneObjects.at(i).getImage() != NULL &&
+					SceneManager::GetInstance().sceneObjects.at(i).getImage()->imageAsset != NULL)
+				{
+					SDL_BlitScaled(SceneManager::GetInstance().sceneObjects.at(i).getImage()->imageAsset,
+						NULL, gScreenSurface,
+						&SceneManager::GetInstance().sceneObjects.at(i).getTransform()->transform);
+				}
+				
+			}
+				
 
 
 				//Update the surface
 				SDL_UpdateWindowSurface(gWindow);
-			
-
-		//}
-	//}
-
-	//Free resources and close SDL
 	
 }
 
-bool init()
+bool RenderManager::init()
 {
 	//Initialization flag
 	bool success = true;
@@ -116,36 +84,37 @@ bool init()
 			gScreenSurface = SDL_GetWindowSurface(gWindow);
 		}
 	}
-	stretchRect.x = SCREEN_WIDTH / 2;
+	/*stretchRect.x = SCREEN_WIDTH / 2;
 	stretchRect.y = SCREEN_HEIGHT / 2;
 	stretchRect.w = SCREEN_WIDTH / 4;
-	stretchRect.h = SCREEN_HEIGHT / 4;
+	stretchRect.h = SCREEN_HEIGHT / 4;*/
 	return success;
 }
 
-bool loadMedia()
+bool RenderManager::loadMedia(std::string imagePath,Image* image)
 {
+
 	//Loading success flag
 	bool success = true;
 	//RENDER
 	//Load splash image
-	gHelloWorld = SDL_LoadBMP("Sprites/hello_world.bmp");
-	if (gHelloWorld == NULL)
+	image->imageAsset = SDL_LoadBMP(imagePath.c_str());
+	if (image->imageAsset == NULL)
 	{
-		printf("Unable to load image %s! SDL Error: %s\n", "Sprites/hello_world.bmp", SDL_GetError());
+		printf("Unable to load image %s! SDL Error: %s\n", imagePath.c_str(), SDL_GetError());
 		success = false;
 	}
-	gRun = SDL_LoadBMP("Sprites/hello_world.bmp");
+	/*gRun = SDL_LoadBMP("Sprites/hello_world.bmp");
 	if (gRun == NULL)
 	{
 		printf("Unable to load image %s! SDL Error: %s\n", "Sprites/hello_world.bmp", SDL_GetError());
 		success = false;
 	}
-
+	*/
 	return success;
 }
 
-void close()
+void RenderManager::close()
 {
 	//Deallocate surface
 	SDL_FreeSurface(gHelloWorld);

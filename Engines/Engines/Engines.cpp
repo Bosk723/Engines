@@ -9,6 +9,8 @@
 #include "GameManager.h"
 #include "GameObject.h"
 #include "Transform.h"
+#include "SceneManager.h"
+#include "RenderManager.h"
 
 
 
@@ -19,10 +21,21 @@ int main(int argc, char* args[])
 	
 	GameManager::initialize();
 	GameObject go;
-	go.addComponent("transform");
+	GameObject go2;
+	GameObject go3;
 	
-	Transform* asf = go.getTransform();
-	go.deleteComponent("transform");
+	
+	go.addComponent("image");
+	go.getTransform()->transform.x = 200;
+	go.getTransform()->transform.y = 200;
+	
+	RenderManager::GetInstance().loadMedia("Sprites/hello_world.bmp", go.getImage());
+	SceneManager::GetInstance().addObjectToScene(go);
+	SceneManager::GetInstance().addObjectToScene(go2);
+	SceneManager::GetInstance().addObjectToScene(go3);
+
+	SceneManager::GetInstance().addBackground("Sprites/hello_world.bmp");
+
 	//INPUT
 	SDL_Event e;
 	bool quit = false;
