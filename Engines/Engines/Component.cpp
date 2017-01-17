@@ -11,3 +11,8 @@ Component::Component()
 Component::~Component()
 {
 }
+
+void Component::update()
+{
+
+}

@@ -24,6 +24,10 @@ void SceneManager::update()
 	for (int i = 0; i < GetInstance().sceneObjects.size(); i++)
 	{
 		GetInstance().sceneObjects.at(i).update();
+		for (int j = 0; j < GetInstance().sceneObjects.at(i).componentsSize; j++)
+		{
+			GetInstance().sceneObjects.at(i).components[j]->update();
+		}
 	}
 }
 
