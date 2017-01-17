@@ -1,5 +1,3 @@
-
-
 #include "stdafx.h"
 #include "SoundManager.h"
 #include <SDL_mixer.h>
@@ -7,19 +5,10 @@
 #include <string>
 #include <SDL.h>
 
-//The music that will be played
-Mix_Music *gMusic = NULL;
-
-//The sound effects that will be used
-Mix_Chunk *gScratch = NULL;
-
 SoundManager::SoundManager()
 {
-	/*loadMusic();
-	Mix_PlayMusic(gMusic, -1);*/
-	playSound("Sounds/scratch.wav");
-	playMusic("Sounds/beat.wav");
-	Mix_PlayChannel(-1, gScratch, 0);
+	Mix_Music *gMusic = NULL;
+	Mix_Chunk *gScratch = NULL;
 }
 
 
@@ -31,9 +20,6 @@ SoundManager::~SoundManager()
 }
 void SoundManager::initialize()
 {
-
-	
-
 	//Initialize SDL
 	if (SDL_Init(SDL_INIT_AUDIO) < 0)
 	{
@@ -48,9 +34,7 @@ void SoundManager::initialize()
 			printf("SDL_mixer could not initialize! SDL_mixer Error: %s\n", Mix_GetError());
 		}
 	}
-
 	CreateSingleton();
-
 }
 
 void SoundManager::update()
@@ -62,7 +46,6 @@ bool SoundManager::loadSound(std::string sound)
 {
 	//Loading success flag
 	bool success = true;
-	
 
 	//Load sound effects
 	gScratch = Mix_LoadWAV(sound.c_str());
@@ -73,16 +56,12 @@ bool SoundManager::loadSound(std::string sound)
 		printf("Failed to load scratch sound effect! SDL_mixer Error: %s\n", Mix_GetError());
 		success = false;
 	}
-
-
 	return success;
 }
 bool SoundManager::loadMusic(std::string music)
 {
 	//Loading success flag
 	bool success = true;
-
-
 
 	//Load music
 	gMusic = Mix_LoadMUS(music.c_str());
@@ -114,6 +93,7 @@ void SoundManager::freeMusic()
 void SoundManager::playSound(std::string soundName)
 {
 	loadSound(soundName);
+	Mix_PlayChannel(-1, gScratch, 0);
 }
 void SoundManager::playMusic(std::string soundMusic)
 {

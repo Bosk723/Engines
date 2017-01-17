@@ -6,7 +6,6 @@
 Image::Image()
 {
 	imageAsset = NULL;
-	
 }
 
 

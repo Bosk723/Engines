@@ -12,11 +12,9 @@ private:
 	GameManager();
 
 public:
-	
-	
-	virtual ~GameManager();
 	static void initialize();
 	void update();
-
+	void gameLoop();
+	virtual ~GameManager();
 };
 

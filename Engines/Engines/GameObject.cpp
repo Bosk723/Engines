@@ -6,9 +6,6 @@
 #include "Image.h"
 
 
- 
-
-
 GameObject::GameObject()
 {
 	components[0] = NULL;
@@ -25,15 +22,13 @@ void GameObject::update()
 
 }
 
-Component *GameObject::addComponent(std::string typeOfComponent)
+Component * GameObject::addComponent(std::string typeOfComponent)
 {
-	if (typeOfComponent.compare("transform")==0)
+	if (typeOfComponent.compare("transform") == 0)
 	{
 		if (components[0] == NULL )
 		{
-			components[0] = new Transform();
-			//int  AAAAAAAAA = dynamic_cast<Transform*>( components[0])->x;
-			
+			components[0] = new Transform();		
 		}
 	}
 	else if(typeOfComponent.compare("image") == 0)
@@ -45,13 +40,12 @@ Component *GameObject::addComponent(std::string typeOfComponent)
 		if (components[1] == NULL)
 		{
 			components[1] =new Image();
-			
 		}
 	}
-	
 	return getComponent(typeOfComponent);
 }
-Component *GameObject::getComponent(std::string typeOfComponent)
+
+Component * GameObject::getComponent(std::string typeOfComponent)
 {
 	if (typeOfComponent.compare("transform") == 0)
 	{
@@ -63,10 +57,9 @@ Component *GameObject::getComponent(std::string typeOfComponent)
 	}
 	
 	return NULL;
-	
 }
 
-Transform *GameObject::getTransform()
+Transform * GameObject::getTransform()
 {
 	return dynamic_cast<Transform*>(getComponent("transform"));
 }
@@ -74,8 +67,6 @@ Image *GameObject::getImage()
 {
 	return dynamic_cast<Image*>(getComponent("image"));
 }
-
-
 
 void GameObject::deleteComponent(std::string typeOfComponent)
 {

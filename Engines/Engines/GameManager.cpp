@@ -1,48 +1,56 @@
 #include "stdafx.h"
 #include "GameManager.h"
+#include "InputManager.h"
 #include "RenderManager.h"
 #include "TimeManager.h"
 #include "SoundManager.h"
 #include "InputManager.h"
 #include "SceneManager.h"
-#include "AssetsManager.h"
 
 GameManager::GameManager()
 {
-
+	
 }
 
 
 GameManager::~GameManager()
 {
+	SoundManager::GetInstance().~SoundManager();
 	RenderManager::GetInstance().~RenderManager();
+	SceneManager::GetInstance().~SceneManager();
 	InputManager::GetInstance().~InputManager();
 	TimeManager::GetInstance().~TimeManager();
-	SoundManager::GetInstance().~SoundManager();
-	SceneManager::GetInstance().~SceneManager();
-	AssetsManager::GetInstance().~AssetsManager();
-	
 }
 
 void GameManager::initialize()
-{
-	
+{	
 	CreateSingleton();
-	RenderManager::initialize();
-	InputManager::initialize();
 	TimeManager::initialize();
-	SoundManager::initialize();
+	InputManager::initialize();
 	SceneManager::initialize();
-	AssetsManager::initialize();
+	RenderManager::initialize();
+	SoundManager::initialize();
 }
 
 void GameManager::update()
 {
-
-	RenderManager::GetInstance().update();
-	InputManager::GetInstance().update();
 	TimeManager::GetInstance().update();
-	SoundManager::GetInstance().update();
+	InputManager::GetInstance().update();
 	SceneManager::GetInstance().update();
-	AssetsManager::GetInstance().update();
+	//Fixed update for the render
+	if (TimeManager::GetInstance().mustUpdate)
+	{
+		RenderManager::GetInstance().update();
+		TimeManager::GetInstance().mustUpdate = false;
+	}
+	SoundManager::GetInstance().update();
+}
+
+void GameManager::gameLoop()
+{
+	while (InputManager::GetInstance().gameRunning)
+	{
+		update();
+	}
+	GetInstance().~GameManager();
 }

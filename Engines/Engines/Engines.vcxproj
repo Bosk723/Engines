@@ -151,7 +151,6 @@
     <Text Include="ReadMe.txt" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="AssetsManager.h" />
     <ClInclude Include="Component.h" />
     <ClInclude Include="GameManager.h" />
     <ClInclude Include="GameObject.h" />
@@ -167,7 +166,6 @@
     <ClInclude Include="Transform.h" />
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="AssetsManager.cpp" />
     <ClCompile Include="Component.cpp" />
     <ClCompile Include="Engines.cpp" />
     <ClCompile Include="GameManager.cpp" />

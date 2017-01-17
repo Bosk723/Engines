@@ -11,10 +11,8 @@ private:
 	SceneManager();
 public:
 	std::vector<GameObject> sceneObjects;
-	SDL_Surface* background;
 	void addObjectToScene(GameObject object);
-	void addBackground(std::string imagePath);
-	virtual ~SceneManager();
 	static void initialize();
 	void update();
+	virtual ~SceneManager();
 };

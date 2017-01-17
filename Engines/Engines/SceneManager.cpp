@@ -7,9 +7,8 @@
 
 SceneManager::SceneManager()
 {
-	background = NULL;
-}
 
+}
 
 SceneManager::~SceneManager()
 {
@@ -17,25 +16,19 @@ SceneManager::~SceneManager()
 
 void SceneManager::initialize()
 {
-
 	CreateSingleton();
-
-
-
 }
 
 void SceneManager::update()
 {
-
+	for (int i = 0; i < GetInstance().sceneObjects.size(); i++)
+	{
+		GetInstance().sceneObjects.at(i).update();
+	}
 }
 
 void SceneManager::addObjectToScene(GameObject object)
 {
 	sceneObjects.insert(sceneObjects.end(), object);
 	
-}
-
-void SceneManager::addBackground(std::string imagePath)
-{
-	background= SDL_LoadBMP(imagePath.c_str());
 }

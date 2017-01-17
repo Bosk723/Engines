@@ -5,8 +5,7 @@ class Image :
 	public Component
 {
 public:
-	SDL_Surface* imageAsset;
-	
+	SDL_Texture * imageAsset;	
 	Image();
 	virtual ~Image();
 };
